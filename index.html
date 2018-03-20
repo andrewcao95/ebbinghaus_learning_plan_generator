@@ -1,0 +1,236 @@
+	<title>学习计划时间表生成器</title>
+	<style type="text/css">
+	a{text-decoration: none;color:#39f; }
+	body{width: 988px; margin: 0 auto;}
+	th{text-align: right; font-size: 14px; color: #666;width: 100px;}
+	td{font-size: 12px;color: #999;padding: 3px 0;}
+	input{width: 136px;}
+	input[type=checkbox]{width:auto;}
+	h1{text-align: center;}
+	#sidebar{float: left;width: 270px;margin-right: 10px;margin-top: 70px;}
+	#output{width: 707px;font-family: Verdana;float: left;font-size: 12px;}
+	#output>span{
+		width: 100px;
+		float: left;
+		height: 20px;
+		border: 1px solid #aaa;
+		border-left: none;
+		text-align: center;
+	}
+	#output{border-left: 1px solid #aaa;}
+	#calendar>div{
+		width: 97px;
+		height: 114px;
+		float: left;
+		padding-left: 3px;
+		border-right: 1px solid #aaa;
+		border-bottom: 1px solid #aaa;
+	}
+	@media print{form{display: none;}body{width: 708px;}}
+	</style>
+<script src="./js/bsStatic.js" type="text/javascript" charset="utf-8"></script><script src="./js/fingerprint2.min.js" type="text/javascript" charset="utf-8"></script><script src="./js/bs-engine.js" type="text/javascript" charset="utf-8"></script></head>
+<body>
+
+
+<!-- BEGIN WAYBACK TOOLBAR INSERT -->
+<script type="text/javascript" src="./js/disclaim-element.js"></script>
+<script type="text/javascript" src="./js/graph-calc.js"></script>
+<script type="text/javascript">//<![CDATA[
+var __wm = (function(imgWidth,imgHeight,yearImgWidth,monthImgWidth){
+var wbPrefix = "/web/";
+var wbCurrentUrl = "http://exam4.us/";
+
+var firstYear = 1996;
+var displayDay = "8";
+var displayMonth = "三月";
+var displayYear = "2016";
+var prettyMonths = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+var $D=document,$=function(n){return document.getElementById(n)};
+var trackerVal,curYear = -1,curMonth = -1;
+var yearTracker,monthTracker;
+function showTrackers(val) {
+  if (val===trackerVal) return;
+  var $ipp=$("wm-ipp");
+  var $y=$("displayYearEl"),$m=$("displayMonthEl"),$d=$("displayDayEl");
+  if (val) {
+    $ipp.className="hi";
+  } else {
+    $ipp.className="";
+    $y.innerHTML=displayYear;$m.innerHTML=displayMonth;$d.innerHTML=displayDay;
+  }
+  yearTracker.style.display=val?"inline":"none";
+  monthTracker.style.display=val?"inline":"none";
+  trackerVal = val;
+}
+function trackMouseMove(event,element) {
+  var eventX = getEventX(event);
+  var elementX = getElementX(element);
+  var xOff = Math.min(Math.max(0, eventX - elementX),imgWidth);
+  var monthOff = xOff % yearImgWidth;
+
+  var year = Math.floor(xOff / yearImgWidth);
+  var monthOfYear = Math.min(11,Math.floor(monthOff / monthImgWidth));
+  // 1 extra border pixel at the left edge of the year:
+  var month = (year * 12) + monthOfYear;
+  var day = monthOff % 2==1?15:1;
+  var dateString = zeroPad(year + firstYear) + zeroPad(monthOfYear+1,2) +
+    zeroPad(day,2) + "000000";
+
+  $("displayYearEl").innerHTML=year+firstYear;
+  $("displayMonthEl").innerHTML=prettyMonths[monthOfYear];
+  // looks too jarring when it changes..
+  //$("displayDayEl").innerHTML=zeroPad(day,2);
+  var url = wbPrefix + dateString + '/' +  wbCurrentUrl;
+  $("wm-graph-anchor").href=url;
+
+  if(curYear != year) {
+    var yrOff = year * yearImgWidth;
+    yearTracker.style.left = yrOff + "px";
+    curYear = year;
+  }
+  if(curMonth != month) {
+    var mtOff = year + (month * monthImgWidth) + 1;
+    monthTracker.style.left = mtOff + "px";
+    curMonth = month;
+  }
+}
+function hideToolbar() {
+  $("wm-ipp").style.display="none";
+}
+function bootstrap() {
+  var $spk=$("wm-ipp-sparkline");
+  yearTracker=$D.createElement('div');
+  yearTracker.className='yt';
+  with(yearTracker.style){
+    display='none';width=yearImgWidth+"px";height=imgHeight+"px";
+  }
+  monthTracker=$D.createElement('div');
+  monthTracker.className='mt';
+  with(monthTracker.style){
+    display='none';width=monthImgWidth+"px";height=imgHeight+"px";
+  }
+  $spk.appendChild(yearTracker);
+  $spk.appendChild(monthTracker);
+
+  var $ipp=$("wm-ipp");
+  $ipp&&disclaimElement($ipp);
+}
+return{st:showTrackers,mv:trackMouseMove,h:hideToolbar,bt:bootstrap};
+})(525, 27, 25, 2);//]]>
+</script>
+<style type="text/css">
+body {
+  margin-top:0 !important;
+  padding-top:0 !important;
+  min-width:800px !important;
+}
+</style>
+
+<script type="text/javascript">__wm.bt();</script>
+<!-- END WAYBACK TOOLBAR INSERT -->
+
+<form id="sidebar">
+ 	<table>
+ 		<tbody><tr><th>计划名</th><td><input id="plan" value="标题"></td></tr>
+ 		<tr><th>List 名</th><td><input id="book" value="L"></td></tr>
+ 		<tr><th>开始日期</th><td><input id="startDate" type="date"></td></tr>
+ 		<tr><th>每天 List 数</th><td><input id="listPerDay" value="2"></td></tr>
+ 		<tr><th>List 总数</th><td><input id="totalList" value="42"><br></td></tr>
+ 		<tr><th>是否逆序</th><td><input id="reverse" type="checkbox"></td></tr>
+ 		<tr><th></th><td><button id="generate">点击这里生成</button><button type="button" onclick="javascript:window.print()">打印</button></td></tr>
+ 	</tbody></table>
+	<br>
+</form>
+<h1>学习计划时间表生成器标题</h1>
+<div id="output">
+	<span>Sun</span>
+	<span>Mon</span>
+	<span>Tue</span>
+	<span>Wed</span>
+	<span>Thr</span>
+	<span>Fri</span>
+	<span>Sat</span>
+	<div id="calendar"><div>9/18</div><div>9/19</div><div>9/20<br>&nbsp;&nbsp;L 1~2<br>*L 1~2</div><div>9/21<br>&nbsp;&nbsp;L 3~4<br>*L 1~2<br>*L 3~4</div><div>9/22<br>&nbsp;&nbsp;L 5~6<br>*L 3~4<br>*L 5~6</div><div>9/23<br>&nbsp;&nbsp;L 7~8<br>*L 1~2<br>*L 5~6<br>*L 7~8</div><div>9/24<br>&nbsp;&nbsp;L 9~10<br>*L 3~4<br>*L 7~8<br>*L 9~10</div><div>9/25<br>&nbsp;&nbsp;L 11~12<br>*L 5~6<br>*L 9~10<br>*L 11~12</div><div>9/26<br>&nbsp;&nbsp;L 13~14<br>*L 7~8<br>*L 11~12<br>*L 13~14</div><div>9/27<br>&nbsp;&nbsp;L 15~16<br>*L 1~2<br>*L 9~10<br>*L 13~14<br>*L 15~16</div><div>9/28<br>&nbsp;&nbsp;L 17~18<br>*L 3~4<br>*L 11~12<br>*L 15~16<br>*L 17~18</div><div>9/29<br>&nbsp;&nbsp;L 19~20<br>*L 5~6<br>*L 13~14<br>*L 17~18<br>*L 19~20</div><div>9/30<br>&nbsp;&nbsp;L 21~22<br>*L 7~8<br>*L 15~16<br>*L 19~20<br>*L 21~22</div><div>10/1<br>&nbsp;&nbsp;L 23~24<br>*L 9~10<br>*L 17~18<br>*L 21~22<br>*L 23~24</div><div>10/2<br>&nbsp;&nbsp;L 25~26<br>*L 11~12<br>*L 19~20<br>*L 23~24<br>*L 25~26</div><div>10/3<br>&nbsp;&nbsp;L 27~28<br>*L 13~14<br>*L 21~22<br>*L 25~26<br>*L 27~28</div><div>10/4<br>&nbsp;&nbsp;L 29~30<br>*L 1~2<br>*L 15~16<br>*L 23~24<br>*L 27~28<br>*L 29~30</div><div>10/5<br>&nbsp;&nbsp;L 31~32<br>*L 3~4<br>*L 17~18<br>*L 25~26<br>*L 29~30<br>*L 31~32</div><div>10/6<br>&nbsp;&nbsp;L 33~34<br>*L 5~6<br>*L 19~20<br>*L 27~28<br>*L 31~32<br>*L 33~34</div><div>10/7<br>&nbsp;&nbsp;L 35~36<br>*L 7~8<br>*L 21~22<br>*L 29~30<br>*L 33~34<br>*L 35~36</div><div>10/8<br>&nbsp;&nbsp;L 37~38<br>*L 9~10<br>*L 23~24<br>*L 31~32<br>*L 35~36<br>*L 37~38</div><div>10/9<br>&nbsp;&nbsp;L 39~40<br>*L 11~12<br>*L 25~26<br>*L 33~34<br>*L 37~38<br>*L 39~40</div><div>10/10<br>&nbsp;&nbsp;L 41~42<br>*L 13~14<br>*L 27~28<br>*L 35~36<br>*L 39~40<br>*L 41~42</div><div>10/11<br>*L 15~16<br>*L 29~30<br>*L 37~38<br>*L 41~42</div><div>10/12<br>*L 17~18<br>*L 31~32<br>*L 39~40</div><div>10/13<br>*L 19~20<br>*L 33~34<br>*L 41~42</div><div>10/14<br>*L 21~22<br>*L 35~36</div><div>10/15<br>*L 1~2<br>*L 23~24<br>*L 37~38</div><div>10/16<br>*L 3~4<br>*L 25~26<br>*L 39~40</div><div>10/17<br>*L 5~6<br>*L 27~28<br>*L 41~42</div><div>10/18<br>*L 7~8<br>*L 29~30</div><div>10/19<br>*L 9~10<br>*L 31~32</div><div>10/20<br>*L 11~12<br>*L 33~34</div><div>10/21<br>*L 13~14<br>*L 35~36</div><div>10/22<br>*L 15~16<br>*L 37~38</div><div>10/23<br>*L 17~18<br>*L 39~40</div><div>10/24<br>*L 19~20<br>*L 41~42</div><div>10/25<br>*L 21~22</div><div>10/26<br>*L 23~24</div><div>10/27<br>*L 25~26</div><div>10/28<br>*L 27~28</div><div>10/29<br>*L 29~30</div><div>10/30<br>*L 31~32</div><div>10/31<br>*L 33~34</div><div>11/1<br>*L 35~36</div><div>11/2<br>*L 37~38</div><div>11/3<br>*L 39~40</div><div>11/4<br>*L 41~42</div></div>
+</div>
+<form>
+
+</form>
+<script src="./js/jquery-latest.min.js"></script>
+<!-- <script src="jquery-latest.min.js"></script> -->
+<script>
+	$("#startDate").val(new Date().toJSON().slice(0,10));
+	$("#generate").click(function() {
+		var book=$("#book").val();
+		var startDate=$("#startDate").val();
+		var listPerDay=$("#listPerDay").val()-0;
+		var totalList=$("#totalList").val()-0;
+		var weekday=new Date(startDate).getDay();
+		var firstLineSunday=new Date(new Date(startDate)-weekday*86400000);
+		var calendar=$("#calendar").empty();
+		var	reverse=$("#reverse").prop("checked");
+
+		$("h1").text($("#plan").val())
+		for (var i = 0,l=totalList/listPerDay+25+weekday; i<l; i++) {
+			currentDay=new Date(firstLineSunday-0+i*86400000);
+			calendar.append("<div>"+(currentDay.getMonth()-0+1)+"/"+currentDay.getDate()+"</div>")
+		};
+
+		var plan=[];
+		for (var i = 0,l=totalList/listPerDay; i <l; i++) {
+			tmp=[];
+			for (var j = 1; j <= listPerDay; j++) {
+				k=i*listPerDay+j;
+				if (k>totalList) break;
+				tmp.push(k)
+			};
+			if(tmp.length==1){
+				str=tmp[0]
+			} else {
+				str=tmp.shift()+"~"+tmp.pop();
+			}
+			plan.push(str);
+		};
+		for (var i = 0,l=plan.length; i < l; i++) {
+			calendar.children().eq(weekday+i).append("<br>&nbsp;&nbsp;"+book+" "+plan[reverse?l-i-1:i])
+		};
+		var plan=[];
+		for (var i = 0,l=totalList/listPerDay; i <l; i++) {
+			tmp=[];
+			for (var j = 1; j <= listPerDay; j++) {
+				k=i*listPerDay+j;
+				if (k>totalList) break;
+				tmp.push(k)
+			};
+			if(tmp.length==1){
+				str=tmp[0]
+			} else {
+				str=tmp.shift()+"~"+tmp.pop();
+			}
+
+			plan.push(str);
+
+		};
+		for (var i = 0,l=plan.length; i < l; i++) {
+			calendar.children().eq(weekday+i).append("<br>*"+book+" "+plan[reverse?l-i-1:i])
+			calendar.children().eq(weekday+i+1).append("<br>*"+book+" "+plan[reverse?l-i-1:i])
+			calendar.children().eq(weekday+i+3).append("<br>*"+book+" "+plan[reverse?l-i-1:i])
+			calendar.children().eq(weekday+i+7).append("<br>*"+book+" "+plan[reverse?l-i-1:i])
+			calendar.children().eq(weekday+i+14).append("<br>*"+book+" "+plan[reverse?l-i-1:i])
+			calendar.children().eq(weekday+i+25).append("<br>*"+book+" "+plan[reverse?l-i-1:i])
+			
+		};
+		return false;
+	}).click()
+</script>
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?d6d7ae3130cbaacab40c6d676c6a1e96";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+</body></html>
